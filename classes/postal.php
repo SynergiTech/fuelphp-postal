@@ -24,7 +24,7 @@ class Postal
                     $uniq[$email] = true;
                 }
 
-            if (\Fuel::$env == \Fuel::PRODUCTION) {
+            if (\Fuel::$env != \Fuel::DEVELOPMENT) {
                 $message->to($ar_to_name.' <'.$ar_to_email.'>');
             } else {
                 $env = getenv('email');
@@ -36,7 +36,7 @@ class Postal
             }
             endforeach;
         } else {
-            if (\Fuel::$env == \Fuel::PRODUCTION) {
+            if (\Fuel::$env != \Fuel::DEVELOPMENT) {
                 $message->to($to_name.' <'.$to.'>');
             } else {
                 $env = getenv('EMAIL');
