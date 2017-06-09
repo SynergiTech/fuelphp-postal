@@ -1,0 +1,16 @@
+{
+    "name": "synergitech/postal",
+    "description" : "FuelPHP library to integrate Postal Email sending",
+    "type": "fuel-package",
+    "homepage": "https://www.synergitech.co.uk",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Synergi Tech Ltd"
+        }
+    ],
+    "require": {
+        "composer/installers": "~1.0",
+        "postal/postal": "^1.0"
+    }
+}
