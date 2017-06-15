@@ -12,28 +12,28 @@ class Postal
         // Create a new message
         $message = new \Postal\SendMessage($client);
 
-        if (is_array($bcc))
+        if (is_array($bcc)) {
             if (\Fuel::$env == \Fuel::PRODUCTION) {
                 $bccs = array();
-                foreach($bcc as $bcc_email=>$bcc_name) {
-                    if(is_array($bcc_name)) {
-                        foreach($bcc_name as $bcc_subemail=>$bcc_subname) {
+                foreach ($bcc as $bcc_email=>$bcc_name) {
+                    if (is_array($bcc_name)) {
+                        foreach ($bcc_name as $bcc_subemail=>$bcc_subname) {
                             if (preg_match('/(.+?)(?:\+.+?)*@(.+?\..+)/', $bcc_subemail, $matches)) {
                                 $bcc_subemail = $matches[1] . '@' . $matches[2];
-                                if(isset($bccs[$bcc_subemail])) {
+                                if (isset($bccs[$bcc_subemail])) {
                                     continue;
                                 }
                                 $bccs[$bcc_subemail] = $bcc_subname;
                             }
                         }
                     } else {
-                        if(isset($bccs[$bcc_subemail])) {
+                        if (isset($bccs[$bcc_subemail])) {
                             continue;
                         }
                         $bccs[$bcc_subemail] = $bcc_subname;
                     }
                 }
-                foreach($bccs as $email=>$name) {
+                foreach ($bccs as $email=>$name) {
                     $message->bcc($name . ' <' . $email . '>');
                 }
             } else {
@@ -43,8 +43,8 @@ class Postal
                 }
                 $message->bcc('Test User'.' <'.$env.'>');
             }
-        }        
-        
+        }
+
         if (is_array($to)) {
             $uniq = [];
             foreach ($to as $ar_to_email => $ar_to_name):
