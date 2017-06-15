@@ -4,7 +4,7 @@ namespace Synergitech;
 
 class Postal
 {
-    public static function send($subject, $body, $to, $to_name = '', $from = null, $data = array())
+    public static function send($subject, $body, $to, $to_name = '', $from = null, $data = [], $bcc = [])
     {
         $theme = \Theme::instance();
         // Create a new Postal client using the server key you generate in our web interface
@@ -12,7 +12,7 @@ class Postal
         // Create a new message
         $message = new \Postal\SendMessage($client);
 
-        if (is_array($bcc)) {
+        if (is_array($bcc) && count($bcc) > 0) {
             if (\Fuel::$env == \Fuel::PRODUCTION) {
                 $bccs = array();
                 foreach ($bcc as $bcc_email=>$bcc_name) {
