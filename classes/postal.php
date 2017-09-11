@@ -27,10 +27,10 @@ class Postal
                             }
                         }
                     } else {
-                        if (isset($bccs[$bcc_subemail])) {
+                        if (isset($bccs[$bcc_email])) {
                             continue;
                         }
-                        $bccs[$bcc_subemail] = $bcc_subname;
+                        $bccs[$bcc_email] = $bcc_name;
                     }
                 }
                 foreach ($bccs as $email=>$name) {
