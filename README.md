@@ -51,8 +51,20 @@ You can call the send() function to send an email.
 
 ## Webhooks
 
-You can configure a Webhook receiving URL witihn Postal. It should be routed to:
+You can configure a Webhook receiving URL within Postal. You need to create a controller within your FuelPHP project that calls:
 
+```php
+\Synergitech\Postal\Webhook::ProcessWebhook();
 ```
-https://yourapp.io/synergitech/postal/webhook/appmail
+
+Example Controller file (be sure to allow unauthenticated requests to pass to this function):
+
+```php
+class Controller_Webhook extends \Controller_Rest
+{
+    public function action_postal()
+    {
+        \Synergitech\Postal\Webhook::ProcessWebhook();
+    }
+}
 ```

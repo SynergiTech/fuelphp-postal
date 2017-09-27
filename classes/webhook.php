@@ -29,7 +29,7 @@ class Webhook
             $response->send(true);
         } else {
             \Log::warning("No Payload sent from Postal");
-            $response = new \Response('No payload', 498);
+            $response = new \Response('No payload', 400);
             $response->send(true);
             exit;
         }
