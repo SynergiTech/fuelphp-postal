@@ -12,9 +12,8 @@ class Webhook
         $json = \Input::json();
         if (isset($json['payload']['message'])) {
             $email = \Synergitech\Postal\Email::query()
-                ->where('platform', 'postal')
-                ->where('pm_id', $json['payload']['message']['id'])
-                ->where('pm_token', $json['payload']['message']['token'])
+                ->where('postal_id', $json['payload']['message']['id'])
+                ->where('postal_token', $json['payload']['message']['token'])
                 ->get_one();
 
             if ($email) {
