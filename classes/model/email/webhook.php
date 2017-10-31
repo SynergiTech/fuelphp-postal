@@ -25,9 +25,8 @@ class Webhook extends \Orm\Model
 
     protected static $_table_name = 'synergitech_email_webhooks';
 
-
     protected static $_belongs_to = array(
-        'email'   => array(
+        'email' => array(
             'key_from' => 'email_id',
             'model_to' => '\Synergitech\Postal\Email',
             'key_to' => 'id',

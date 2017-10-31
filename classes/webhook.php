@@ -1,14 +1,10 @@
 <?php
-
 namespace Synergitech\Postal;
 
 class Webhook
 {
     public static function ProcessWebhook()
     {
-        $signature = \Input::headers('X-Postal-Signature', null);
-        $body = file_get_contents('php://input');
-
         $json = \Input::json();
         if (isset($json['payload']['message'])) {
             $email = \Synergitech\Postal\Email::query()
@@ -25,12 +21,10 @@ class Webhook
             }
 
             $response = new \Response('', 200);
-            $response->send(true);
         } else {
             \Log::warning("No Payload sent from Postal");
             $response = new \Response('No payload', 400);
-            $response->send(true);
-            exit;
         }
+        $response->send(true);
     }
 }

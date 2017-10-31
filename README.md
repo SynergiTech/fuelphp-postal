@@ -1,8 +1,8 @@
 # FuelPHP Postal
 
-FuelPHP-Postal is designed as a fully featured wrapped to the [Postal](https://github.com/atech/postal) email sending platform.
+FuelPHP-Postal is designed as a fully featured wrapper to the [Postal](https://github.com/atech/postal) email sending platform.
 
-Currently it handles Sending Emails, with or without attachments, stores the message ID returned from Postal in a database, and also exposes as Webhook receiver to handle notifications from Postal that messages have been delivered, opened etc.
+Currently it handles sending emails, with or without attachments, stores the message ID returned from Postal in a database, and also exposes a webhook receiver to handle notifications from Postal that messages have been delivered, opened etc.
 
 ## Installation
 
@@ -31,27 +31,36 @@ You need to configure your app to point to your Postal instance and the address 
 
 ```php
 return [
-    'api_key'   =>  'ABCDEFGHI123456790',
-    'send-name' =>  'Your App Name',
-    'send-address' =>  'noreply@yourapp.io',
-    'reply-to' =>  'reply@yourapp.io',
-    'template_html' =>  'email/generic/html',
-    'template_text' =>  'email/generic/text'
+    'url' => 'https://yourpostal.io',
+    'api_key' => 'ABCDEFGHI123456790',
+    'send-name' => 'Your App Name',
+    'send-address' => 'noreply@yourapp.io',
+    'reply-to' => 'reply@yourapp.io',
+    'template_html' => 'email/generic/html',
+    'template_text' => 'email/generic/text'
 ];
 ```
 
-The template_text and template_html will be used by default as the view files into which your $data array will be merged using FuelPHP's built in View render() function.
+The `template_text` and `template_html` will be used by default as the view files into which your `$data` array will be merged using FuelPHP's built in View `render()` function.
+
+You will need to add `postal` to the `config` and `package` autoloaders to ensure they are available to your classes.
+
+You can also define an environment variable in your `.htaccess` file to send all emails to one address which will help you develop your app.
+
+```
+SetEnv EMAIL you@company.io
+```
 
 ## Quick Sending email
 
-You can call the send() function to send an email.
+You can call the `send()` function to send an email. Arguments after `$to` are optional.
 ```php
-\Synergitech\Postal::send($subject, $body, $to, $to_name, $from, $data);
+\Synergitech\Postal::send($subject, $body, $to, $to_name, $from, $data, $bcc);
 ```
 
 ## Webhooks
 
-You can configure a Webhook receiving URL within Postal. You need to create a controller within your FuelPHP project that calls:
+You can configure a webhook receiving URL within Postal. You need to create a controller within your FuelPHP project that calls:
 
 ```php
 \Synergitech\Postal\Webhook::ProcessWebhook();
@@ -60,7 +69,9 @@ You can configure a Webhook receiving URL within Postal. You need to create a co
 Example Controller file (be sure to allow unauthenticated requests to pass to this function):
 
 ```php
-class Controller_Webhook extends \Controller_Rest
+namespace Controller;
+
+class Webhook extends \Controller_Rest
 {
     public function action_postal()
     {

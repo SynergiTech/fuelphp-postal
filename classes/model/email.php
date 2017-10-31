@@ -31,12 +31,12 @@ class Email extends \Orm\Model
     protected static $_table_name = 'synergitech_emails';
 
     protected static $_has_many = array(
-    'webhooks'   => array(
-      'key_from' => 'id',
-      'model_to' => '\Synergitech\Postal\Email\Webhook',
-      'key_to' => 'email_id',
-      'cascade_save' => true,
-      'cascade_delete' => true,
-    )
+        'webhooks'   => array(
+            'key_from' => 'id',
+            'model_to' => '\Synergitech\Postal\Email\Webhook',
+            'key_to' => 'email_id',
+            'cascade_save' => true,
+            'cascade_delete' => true,
+        )
   );
 }
