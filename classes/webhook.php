@@ -7,17 +7,16 @@ class Webhook
     {
         $json = \Input::json();
         if (isset($json['payload']['message'])) {
-            $email = \Synergitech\Postal\Email::query()
+            if ($email = \Synergitech\Postal\Email::query()
                 ->where('postal_id', $json['payload']['message']['id'])
                 ->where('postal_token', $json['payload']['message']['token'])
-                ->get_one();
-
-            if ($email) {
-                $webhook = \Synergitech\Postal\Email\Webhook::forge();
-                $webhook->email_id = $email->id;
-                $webhook->action = $json['event'];
-                $webhook->payload = json_encode($json['payload']);
-                $webhook->save();
+                ->get_one()
+            ) {
+                \Synergitech\Postal\Email\Webhook::forge(array(
+                    'email_id' => $email->id,
+                    'action' => $json['event'],
+                    'payload' => json_encode($json['payload'])
+                ))->save();
             }
 
             $response = new \Response('', 200);

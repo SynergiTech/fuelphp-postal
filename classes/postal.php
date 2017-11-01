@@ -97,17 +97,16 @@ class Postal
         $result = $message->send();
 
         foreach ($result->recipients() as $email => $message) {
-            $logEmail = \Synergitech\Postal\Email::forge();
-            $logEmail->from_name = $from;
-            $logEmail->from_email = \Config::get('postal.send-address');
-            $logEmail->subject = $subject;
-            $logEmail->to_line = $email;
-            $logEmail->body = $body;
-            $logEmail->data = json_encode($data);
-            $logEmail->postal_id = $message->id();
-            $logEmail->postal_token = $message->token();
-            $logEmail->save();
-            unset($logEmail);
+            \Synergitech\Postal\Email::forge(array(
+                'from_name' => $from,
+                'from_email' => \Config::get('postal.send-address'),
+                'subject' => $subject,
+                'to_line' => $email,
+                'body' => $body,
+                'data' => json_encode($data),
+                'postal_id' => $message->id(),
+                'postal_token' => $message->token()
+            ))->save();
         }
 
         return true;
