@@ -81,6 +81,11 @@ $message->attach('report.pdf', 'application/pdf', file_get_contents('report.pdf'
 $message->send();
 ```
 
+If you want to store your message contents in another view file, send a null body and a 'body_view' item in the `$data` array. The view will receive either an `$is_text` variable or an `$is_html` variable if you need to slightly differentiate between the two.
+```php
+$message = \Synergitech\Postal\SendMessage::forge($subject, null, ['body_view' => $bodyview] + $data);
+```
+
 ## Webhooks
 
 You can configure a webhook receiving URL within Postal. You need to create a controller within your FuelPHP project that calls:
