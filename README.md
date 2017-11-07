@@ -51,11 +51,34 @@ You can also define an environment variable in your `.htaccess` file to send all
 SetEnv EMAIL you@company.io
 ```
 
-## Quick Sending email
+## Quick Sending Messages
 
 You can call the `send()` function to send an email. Arguments after `$to` are optional.
 ```php
 \Synergitech\Postal::send($subject, $body, $to, $to_name, $from, $data, $bcc);
+```
+
+## Normal Sending Messages
+
+If you want to access other features such as headers, attachments, and CC, you can `forge()` a new object which behaves similarly to Postals PHP library. The `$data` and `$from` arguments are optional.
+```php
+$message = \Synergitech\Postal\SendMessage::forge($subject, $body, $data, $from);
+```
+
+Now you can use it to fill in the recipients and send. `to()`, `cc()`, and `bcc()` all function the same way.
+```php
+$message->to('customer@example.com');
+$message->cc('accounts@example.com', 'Accounts Department');
+
+$message->bcc(array(
+    'tom@example.com' => 'Tom',
+    'dick@example.com' => 'Dick',
+    'harry@example.com' => 'Harry'
+));
+
+$message->attach('report.pdf', 'application/pdf', file_get_contents('report.pdf'));
+
+$message->send();
 ```
 
 ## Webhooks

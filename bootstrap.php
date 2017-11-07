@@ -10,6 +10,7 @@
 
 \Autoloader::add_classes(array(
     'Synergitech\\Postal' => __DIR__.'/classes/postal.php',
+    'Synergitech\\Postal\\SendMessage' => __DIR__.'/classes/sendmessage.php',
     'Synergitech\\Postal\\Webhook' => __DIR__.'/classes/webhook.php',
     'Synergitech\\Postal\\Email' => __DIR__.'/classes/model/email.php',
     'Synergitech\\Postal\\Email\\Webhook' => __DIR__.'/classes/model/email/webhook.php'
