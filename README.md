@@ -51,6 +51,16 @@ You can also define an environment variable in your `.htaccess` file to send all
 SetEnv EMAIL you@company.io
 ```
 
+You can also achieve this by adding a config value `sendallmessagesto` if you would rather not adjust your environment variables.
+
+```php
+return [
+    // ...
+    'sendallmessagesto' => 'you@company.io'
+    // ...
+];
+```
+
 ## Quick Sending Messages
 
 You can call the `send()` function to send an email. Arguments after `$to` are optional.
