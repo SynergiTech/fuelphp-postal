@@ -83,11 +83,6 @@ class SendMessage extends \Postal\SendMessage
     private function handleAddressee($email, $name)
     {
         if (strlen($email) > 0) {
-            // remove the plus component from the email address since Postal cannot handle it
-            if (preg_match('/(.+?)(?:\+.+?)*@(.+?\..+)/', $email, $m)) {
-                $email = $m[1] . '@' . $m[2];
-            }
-
             if (strlen($name) > 0) {
                 return $name . ' <' . $email . '>';
             }
