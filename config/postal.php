@@ -7,5 +7,6 @@ return [
     'send-address' =>  'noreply@synergi.tech',
     'reply-to' =>  'reply@synergi.tech',
     'template_html' =>  'email/generic/html',
-    'template_text' =>  'email/generic/text'
+    'template_text' =>  'email/generic/text',
+    'return_email_objects' => false,
 ];

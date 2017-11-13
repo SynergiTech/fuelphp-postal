@@ -130,8 +130,9 @@ class SendMessage extends \Postal\SendMessage
     {
         $result = parent::send();
 
+        $sent = array();
         foreach ($result->recipients() as $email => $message) {
-            \Synergitech\Postal\Email::forge(array(
+            $sent[] = \Synergitech\Postal\Email::forge(array(
                 'from_name' => $this->attributes['from'],
                 'from_email' => self::getConfig('send-address'),
                 'subject' => $this->attributes['subject'],
@@ -140,9 +141,10 @@ class SendMessage extends \Postal\SendMessage
                 'data' => json_encode($this->original_data),
                 'postal_id' => $message->id(),
                 'postal_token' => $message->token()
-            ))->save();
+            ));
+            $sent[count($sent) - 1]->save();
         }
 
-        return true;
+        return (self::getConfig('return_email_objects', false) === true) ? $sent : true;
     }
 }

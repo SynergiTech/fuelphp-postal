@@ -117,3 +117,28 @@ class Webhook extends \Controller_Rest
     }
 }
 ```
+
+## Logging
+
+Using this package means you store a history of email messages and the webhooks let you keep updated with the status of those messages.
+
+To make use of the messages as part of an audit trail, you will be interested in the database objects for the messages you have just sent.
+
+You can set `return_email_objects` to `true` and any calls to `send()` will return an array of database objects which you can do with what you wish.
+
+```php
+$sent = $message->send();
+
+$log = \Model\Audit\Log::forge(array(
+    // your specific information here
+));
+
+$log->save();
+
+foreach ($sent as $email) {
+    \Model\Audit\Item::forge(array(
+        'log_id' => $log->id,
+        'email_id' => $email->id
+    ))->save();
+}
+```
