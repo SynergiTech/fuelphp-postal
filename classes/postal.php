@@ -57,7 +57,7 @@ class Postal
                 if (\Fuel::$env != \Fuel::DEVELOPMENT) {
                     $message->to($ar_to_name.' <'.$ar_to_email.'>');
                 } else {
-                    $env = getenv('email');
+                    $env = getenv('EMAIL');
                     if (!$env) {
                         $env = 'root@localhost';
                     }
